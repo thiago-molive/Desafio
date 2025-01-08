@@ -1,6 +1,7 @@
 ﻿using Questao1.Domain;
 using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Questao1;
 
@@ -8,19 +9,15 @@ class Program
 {
     static void Main(string[] args)
     {
-
         ContaBancaria conta;
 
-        Console.Write("Entre o número da conta: ");
-        int numero = int.Parse(Console.ReadLine());
-        Console.Write("Entre o titular da conta: ");
-        string titular = Console.ReadLine();
-        Console.Write("Haverá depósito inicial (s/n)? ");
-        char resp = char.Parse(Console.ReadLine());
+        var numero = GetValidLong("Entre o número da conta: ");
+        var titular = GetValidString("Entre o titular da conta: ");
+        char resp = GetValidChar("Haverá depósito inicial (s/n)? ");
+
         if (resp == 's' || resp == 'S')
         {
-            Console.Write("Entre o valor de depósito inicial: ");
-            var depositoInicial = decimal.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            var depositoInicial = GetValidDecimal("Entre o valor de depósito inicial: ");
             conta = ContaBancaria.Create(numero, titular, depositoInicial);
         }
         else
@@ -33,15 +30,13 @@ class Program
         Console.WriteLine(conta);
 
         Console.WriteLine();
-        Console.Write("Entre um valor para depósito: ");
-        var quantia = decimal.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+        var quantia = GetValidDecimal("Entre um valor para depósito: ");
         conta.Deposito(quantia);
         Console.WriteLine("Dados da conta atualizados:");
         Console.WriteLine(conta);
 
         Console.WriteLine();
-        Console.Write("Entre um valor para saque: ");
-        quantia = decimal.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+        quantia = GetValidDecimal("Entre um valor para saque: ");
         conta.Saque(quantia);
         Console.WriteLine("Dados da conta atualizados:");
         Console.WriteLine(conta);
@@ -81,5 +76,59 @@ class Program
         Dados da conta atualizados:
         Conta 5139, Titular: Elza Soares, Saldo: $ -1.50
         */
+    }
+
+    static long GetValidLong(string prompt)
+    {
+        long result;
+        while (true)
+        {
+            Console.Write(prompt);
+            if (long.TryParse(Console.ReadLine(), out result) && result > 0)
+                break;
+            Console.WriteLine("Valor inválido. Por favor, tente novamente.");
+        }
+        return result;
+    }
+
+    static string GetValidString(string prompt)
+    {
+        string result;
+        while (true)
+        {
+            Console.Write(prompt);
+            result = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(result) && Regex.IsMatch(result, "^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$"))
+                break;
+            Console.WriteLine("Valor inválido. Por favor, tente novamente.");
+        }
+        return result;
+    }
+
+    static char GetValidChar(string prompt)
+    {
+        char result;
+        while (true)
+        {
+            Console.Write(prompt);
+            if (char.TryParse(Console.ReadLine(), out result) && (result == 's' || result == 'S' || result == 'n' || result == 'N'))
+                break;
+            Console.WriteLine("Valor inválido. Por favor, tente novamente.");
+        }
+        return result;
+    }
+
+    static decimal GetValidDecimal(string prompt)
+    {
+        decimal result;
+        while (true)
+        {
+            Console.Write(prompt);
+            string input = Console.ReadLine().Replace(',', '.');
+            if (decimal.TryParse(input, NumberStyles.Any, CultureInfo.InvariantCulture, out result))
+                break;
+            Console.WriteLine("Valor inválido. Por favor, tente novamente.");
+        }
+        return result;
     }
 }
