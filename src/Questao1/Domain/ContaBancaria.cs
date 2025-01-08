@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Questao1.Domain;
 
-public sealed class ContaBancaria : EntityBase<Guid>
+public sealed class ContaBancaria
 {
     public static readonly decimal TAXA_SAQUE = 3.5m;
 
@@ -31,14 +31,7 @@ public sealed class ContaBancaria : EntityBase<Guid>
 
         conta.Deposito(depositoInicial);
 
-        conta.Validate();
-
         return conta;
-    }
-
-    protected override void Validate()
-    {
-
     }
 
     public override string ToString() =>
