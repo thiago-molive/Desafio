@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 	<PackageReference Include="Dapper" Version="2.0.35" />
 	<PackageReference Include="Microsoft.Data.Sqlite" Version="3.1.6" />
@@ -16,6 +19,7 @@
 	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0-preview-20220726-02" />
 	<PackageReference Include="Moq" Version="4.18.2" />
 	<PackageReference Include="NSubstitute" Version="4.4.0" />
+	<PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
 	<PackageReference Include="xunit" Version="2.4.2" />
 	<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
 		<PrivateAssets>all</PrivateAssets>
@@ -34,16 +38,27 @@
   <ItemGroup>
     <Folder Include="Application\Commands\Requests\" />
     <Folder Include="Application\Commands\Responses\" />
-    <Folder Include="Application\Handlers\" />
-    <Folder Include="Application\Queries\Requests\" />
-    <Folder Include="Application\Queries\Responses\" />
-    <Folder Include="Domain\Entities\" />
-    <Folder Include="Domain\Enumerators\" />
-    <Folder Include="Domain\Language\" />
     <Folder Include="Infrastructure\Database\CommandStore\Requests\" />
     <Folder Include="Infrastructure\Database\CommandStore\Responses\" />
-    <Folder Include="Infrastructure\Database\QueryStore\Requests\" />
-    <Folder Include="Infrastructure\Database\QueryStore\Responses\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Domain\Language\Mensagens.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Mensagens.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Domain\Language\Mensagens.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mensagens.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

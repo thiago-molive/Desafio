@@ -1,4 +1,4 @@
-﻿using Questao1.Domain.ValueObjects;
+﻿using Abstractions.ValueObjects;
 
 namespace Unit.Tests.Domain;
 

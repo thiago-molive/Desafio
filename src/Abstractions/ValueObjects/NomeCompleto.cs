@@ -1,10 +1,7 @@
-﻿using Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Questao1.Domain.ValueObjects;
+namespace Abstractions.ValueObjects;
 
 public sealed class NomeCompleto : ValueObject
 {

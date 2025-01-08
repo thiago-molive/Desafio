@@ -1,8 +1,4 @@
-﻿using Abstractions;
-using System;
-using System.Collections.Generic;
-
-namespace Questao1.Domain.ValueObjects;
+﻿namespace Abstractions.ValueObjects;
 
 public sealed class NumeroConta : ValueObject
 {
