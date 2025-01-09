@@ -1,4 +1,6 @@
 ﻿using Abstractions.Exceptions;
+using FluentAssertions;
+using Questao5.Domain.DomainEvents;
 using Questao5.Domain.Entities;
 using Questao5.Domain.Enumerators;
 using Questao5.Domain.Language;
@@ -48,6 +50,32 @@ public sealed class ContaCorrenteTests
         Assert.NotNull(movimento);
         Assert.Equal(ETipoMovimento.Credito, movimento.TipoMovimento);
         Assert.Equal(valor, movimento.Valor);
+
+        contaCorrente.GetEvents().Should().HaveCount(1);
+
+        contaCorrente
+            .GetEvents()
+            .Should()
+            .ContainItemsAssignableTo<MovimentacaoCriadaDomainEvent>();
+
+        contaCorrente
+            .GetEvents()
+            .OfType<MovimentacaoCriadaDomainEvent>()
+            .FirstOrDefault()
+            ?.Movimentacao
+            .Valor
+            .Should()
+            .Be(valor);
+
+        contaCorrente
+            .GetEvents()
+            .OfType<MovimentacaoCriadaDomainEvent>()
+            .FirstOrDefault()
+            ?.Movimentacao
+            .TipoMovimento
+            .Should()
+            .Be(movimento.TipoMovimento);
+
     }
 
     [Fact]
@@ -65,6 +93,31 @@ public sealed class ContaCorrenteTests
         Assert.NotNull(movimento);
         Assert.Equal(ETipoMovimento.Debito, movimento.TipoMovimento);
         Assert.Equal(valor, movimento.Valor);
+
+        contaCorrente.GetEvents().Should().HaveCount(1);
+
+        contaCorrente
+            .GetEvents()
+            .Should()
+            .ContainItemsAssignableTo<MovimentacaoCriadaDomainEvent>();
+
+        contaCorrente
+            .GetEvents()
+            .OfType<MovimentacaoCriadaDomainEvent>()
+            .FirstOrDefault()
+            ?.Movimentacao
+            .Valor
+            .Should()
+            .Be(valor);
+
+        contaCorrente
+            .GetEvents()
+            .OfType<MovimentacaoCriadaDomainEvent>()
+            .FirstOrDefault()
+            ?.Movimentacao
+            .TipoMovimento
+            .Should()
+            .Be(movimento.TipoMovimento);
     }
 
     [Fact]
