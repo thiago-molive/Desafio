@@ -18,7 +18,7 @@ public sealed class IdempotencyCommandStore : IIdempotencyCommandStore
 
     public async Task<IdempotencyEntity?> GetRequestByKeyAsync(string key, CancellationToken cancellationToken)
     {
-        var connection = _sqlConnectionFactory.CreateConnection();
+        using var connection = _sqlConnectionFactory.CreateConnection();
 
         var param = new DynamicParameters();
         param.Add("@Key", key.ToUpper(), direction: ParameterDirection.Input);
@@ -40,7 +40,7 @@ public sealed class IdempotencyCommandStore : IIdempotencyCommandStore
 
     public async Task SaveRequestAsync(IdempotencyEntity idempotencyEntity, CancellationToken cancellationToken)
     {
-        var connection = _sqlConnectionFactory.CreateConnection();
+        using var connection = _sqlConnectionFactory.CreateConnection();
 
         var param = new DynamicParameters();
         param.Add("@Id", idempotencyEntity.Id, direction: ParameterDirection.Input);
@@ -57,7 +57,7 @@ public sealed class IdempotencyCommandStore : IIdempotencyCommandStore
 
     public async Task MarkRequestAsProcessedAsync(IdempotencyEntity entity, CancellationToken cancellationToken)
     {
-        var connection = _sqlConnectionFactory.CreateConnection();
+        using var connection = _sqlConnectionFactory.CreateConnection();
 
         var param = new DynamicParameters();
         param.Add("@Key", entity.Id.ToString().ToUpper(), direction: ParameterDirection.Input);

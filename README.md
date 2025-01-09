@@ -32,3 +32,8 @@ ORDER BY ANO DESC, QUANTIDADE DESC
 
 ### Questão 5
 
+ - Nessa questão foi usado os conceitos de DDD, clean arctecture e event driven, usando o Mediatr para o encaminhamento dos comandos e queries, assim como o evento de dominio e também o pipeline do request.
+ - Fiz a parte de idempotencia através do pipeline behavior que o Mediatr nos fornece.
+ - Adicionei um middleware para tratar exceções
+ - Ha algumas coisas que deixei num projeto novo chamado Abstractions.
+ - Tem alguns teste em Unit.Tests.

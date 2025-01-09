@@ -17,7 +17,7 @@ public sealed class ContaCorrenteQueryStore : IContaCorrenteQueryStore
 
     public async Task<(bool, bool)> ContaCorrenteExisteEEstaAtivaAsync(string idContaCorrente, CancellationToken cancellationToken)
     {
-        var connection = _sqlConnectionFactory.CreateConnection();
+        using var connection = _sqlConnectionFactory.CreateConnection();
 
         const string sql = @"
             SELECT
@@ -37,7 +37,7 @@ public sealed class ContaCorrenteQueryStore : IContaCorrenteQueryStore
 
     public async Task<ConsultaSaldoQueryResponse> ObterSaldoContaCorrenteAsync(string idContaCorrente, CancellationToken cancellationToken)
     {
-        var connection = _sqlConnectionFactory.CreateConnection();
+        using var connection = _sqlConnectionFactory.CreateConnection();
 
         var param = new DynamicParameters();
         param.Add("@Id", idContaCorrente.ToUpper(), direction: ParameterDirection.Input);

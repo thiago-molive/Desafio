@@ -19,7 +19,7 @@ public class MovimentacaoCommandStore : IMovimentacaoCommandStore
 
     public async Task<ContaCorrente?> ObterContaEMovimentacoesAsync(string Id, CancellationToken cancellationToken)
     {
-        var connection = _sqlConnectionFactory.CreateConnection();
+        using var connection = _sqlConnectionFactory.CreateConnection();
 
         var param = new DynamicParameters();
         param.Add("@Id", Id.ToUpper(), direction: ParameterDirection.Input);
@@ -55,7 +55,7 @@ public class MovimentacaoCommandStore : IMovimentacaoCommandStore
 
     public async Task<bool> SaveMovimentacaoAsync(MovimentoConta movimentacaoEntity, CancellationToken cancellationToken)
     {
-        var connection = _sqlConnectionFactory.CreateConnection();
+        using var connection = _sqlConnectionFactory.CreateConnection();
 
         var param = new DynamicParameters();
         param.Add("@idmovimento", movimentacaoEntity.Id.ToString().ToUpper(), direction: ParameterDirection.Input);
