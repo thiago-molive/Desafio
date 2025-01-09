@@ -1,4 +1,7 @@
-﻿namespace Abstractions.ValueObjects;
+﻿using Abstractions.Domain;
+using Abstractions.Exceptions;
+
+namespace Abstractions.ValueObjects;
 
 public sealed class NumeroConta : ValueObject
 {
@@ -9,7 +12,7 @@ public sealed class NumeroConta : ValueObject
     public static NumeroConta Create(long numero)
     {
         if (numero <= 0)
-            throw new ArgumentException("Número da conta deve ser maior que zero", nameof(numero));
+            throw new BusinessException(new Error("INVALID_ACCOUNT", "Número da conta deve ser maior que zero"));
 
         return new NumeroConta()
         {

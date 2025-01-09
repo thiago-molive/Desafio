@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
+using Abstractions.Domain;
+using Abstractions.Exceptions;
 
 namespace Abstractions.ValueObjects;
 
@@ -24,10 +26,10 @@ public sealed class NomeCompleto : ValueObject
     private void Validate()
     {
         if (string.IsNullOrWhiteSpace(Nome))
-            throw new ArgumentException("Nome deve ser informado", nameof(Nome));
+            throw new BusinessException(new Error("INVALID_NAME", "Nome deve ser informado"));
 
         if (!Regex.IsMatch(Nome, "^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$"))
-            throw new ArgumentException("Nome informado não é valido", nameof(Nome));
+            throw new BusinessException(new Error("INVALID_NAME", "Nome informado não é valido"));
     }
 
     protected override IEnumerable<object> GetAtomicValues()

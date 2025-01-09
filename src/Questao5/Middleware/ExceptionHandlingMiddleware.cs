@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using FluentValidation;
 
 namespace Questao5.Middleware;
 
@@ -58,6 +59,13 @@ internal sealed class ExceptionHandlingMiddleware
     {
         return exception switch
         {
+            ValidationException validationException => new ExceptionDetails(
+                StatusCodes.Status400BadRequest,
+                "ValidationFailure",
+                "Validation error",
+                "One or more validation errors occurred",
+                validationException.Errors),
+
             BusinessException businessException => new ExceptionDetails(
                 StatusCodes.Status400BadRequest,
                 "BusinessFailure",

@@ -1,6 +1,6 @@
 ﻿using Questao5.Application.Queries.Responses;
 
-namespace Questao5.Application.Handlers.Interfaces;
+namespace Questao5.Application.Handlers.Queries.Interfaces;
 
 public interface IContaCorrenteQueryStore
 {

@@ -21,8 +21,16 @@ public sealed class SaldosController : ControllerBase
         _sender = sender;
     }
 
+    /// <summary>
+    /// Obter saldo da conta corrente
+    /// </summary>
+    /// <remarks>
+    /// Recebe como parâmetro da rota o identificador único da conta corrente
+    /// </remarks>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
-    [Description("Obter saldos pela identificação da conta corrente")]
+    [Description("Obter saldo da conta corrente")]
     [ProducesResponseType(typeof(ConsultaSaldoQueryResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ExceptionHandlingMiddleware.ExceptionDetails), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ExceptionHandlingMiddleware.ExceptionDetails), (int)HttpStatusCode.InternalServerError)]

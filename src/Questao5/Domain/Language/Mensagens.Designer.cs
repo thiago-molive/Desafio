@@ -70,11 +70,56 @@ namespace Questao5.Domain.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apenas contas correntes ativas podem receber movimentação.
+        /// </summary>
+        public static string INACTIVE_ACCOUNT_MOV {
+            get {
+                return ResourceManager.GetString("INACTIVE_ACCOUNT_MOV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apenas contas correntes cadastradas podem consultar o saldo..
         /// </summary>
         public static string INVALID_ACCOUNT {
             get {
                 return ResourceManager.GetString("INVALID_ACCOUNT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apenas contas correntes cadastradas podem receber movimentação.
+        /// </summary>
+        public static string INVALID_ACCOUNT_MOV {
+            get {
+                return ResourceManager.GetString("INVALID_ACCOUNT_MOV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apenas os tipos “débito” ou “crédito” podem ser aceitos.
+        /// </summary>
+        public static string INVALID_TYPE {
+            get {
+                return ResourceManager.GetString("INVALID_TYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apenas valores positivos podem ser recebidos.
+        /// </summary>
+        public static string INVALID_VALUE {
+            get {
+                return ResourceManager.GetString("INVALID_VALUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Houve um problema ao salvar movimentação.
+        /// </summary>
+        public static string UNKNOWN_ERROR {
+            get {
+                return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
             }
         }
     }

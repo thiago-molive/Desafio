@@ -1,11 +1,12 @@
-﻿using Questao5.Domain.Enumerators;
+﻿using Abstractions.Domain;
+using Abstractions.Exceptions;
+using Questao5.Domain.Enumerators;
+using Questao5.Domain.Errors;
 
 namespace Questao5.Domain.Entities;
 
-public sealed class MovimentoConta
+public sealed class MovimentoConta : EntityBase<Guid>
 {
-    public Guid Id { get; private set; }
-
     public Guid IdContaCorrente { get; set; }
 
     public DateTime DataMovimento { get; private set; }
@@ -24,6 +25,22 @@ public sealed class MovimentoConta
             IdContaCorrente = idContaCorrente,
             DataMovimento = DateTime.UtcNow,
             TipoMovimento = tipoMovimento,
+            Valor = valor
+        };
+    }
+
+    public static MovimentoConta Restore(Guid id, string tipoMovimento, decimal valor, DateTime dataMovimento)
+    {
+        return new MovimentoConta()
+        {
+            Id = id,
+            DataMovimento = dataMovimento,
+            TipoMovimento = tipoMovimento switch
+            {
+                "C" => ETipoMovimento.Credito,
+                "D" => ETipoMovimento.Debito,
+                _ => throw new BusinessException(MovimentacaoErrors.TipoMovimentacaoInvalido)
+            },
             Valor = valor
         };
     }

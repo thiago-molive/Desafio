@@ -1,6 +1,6 @@
 ﻿using Questao1.Domain;
 
-namespace Unit.Tests.AccountFlow;
+namespace Unit.Tests.Questao1.AccountFlow;
 
 public sealed class ContaBancariaTestsFlow
 {

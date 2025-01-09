@@ -1,6 +1,6 @@
 ﻿using Abstractions.Data;
 using Dapper;
-using Questao5.Application.Handlers.Interfaces;
+using Questao5.Application.Handlers.Queries.Interfaces;
 using Questao5.Application.Queries.Responses;
 using System.Data;
 
@@ -48,13 +48,13 @@ public sealed class ContaCorrenteQueryStore : IContaCorrenteQueryStore
                 , Sum(case when upper(m.tipomovimento) = 'C' then ifnull(m.Valor, 0) else ifnull(m.Valor, 0) * -1 end) {nameof(ConsultaSaldoQueryResponse.Saldo)}
             FROM
                 contacorrente c
-            LEFT join movimento m on m.idmovimento = c.idcontacorrente
+            LEFT join movimento m on m.idcontacorrente = c.idcontacorrente
             WHERE
                 c.idcontacorrente = @Id
             GROUP BY c.numero, c.nome";
 
         var result = await connection.QueryFirstOrDefaultAsync<ConsultaSaldoQueryResponse>(new CommandDefinition(sql, param, cancellationToken: cancellationToken));
 
-        return result ?? new ConsultaSaldoQueryResponse();
+        return result;
     }
 }

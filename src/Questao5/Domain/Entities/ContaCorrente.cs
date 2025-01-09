@@ -1,14 +1,15 @@
-﻿using Abstractions.ValueObjects;
+﻿using Abstractions.Domain;
+using Abstractions.Exceptions;
+using Abstractions.ValueObjects;
+using Questao5.Domain.DomainEvents;
 using Questao5.Domain.Enumerators;
-using System.Globalization;
+using Questao5.Domain.Language;
 
 namespace Questao5.Domain.Entities;
 
-public sealed class ContaCorrente
+public sealed class ContaCorrente : EntityBase<Guid>
 {
     private IList<MovimentoConta> _historico = new List<MovimentoConta>();
-
-    public Guid Id { get; private set; }
 
     public NumeroConta NumeroConta { get; private set; }
 
@@ -16,24 +17,11 @@ public sealed class ContaCorrente
 
     public bool Ativo { get; private set; }
 
-    private decimal Saldo => _historico.Sum(x => x.Valor);
+    private decimal Saldo => _historico.Sum(x => x.TipoMovimento == ETipoMovimento.Debito ? -x.Valor : x.Valor);
 
     public IReadOnlyCollection<MovimentoConta> Historico => (IReadOnlyCollection<MovimentoConta>)_historico;
 
-    public static ContaCorrente Create(long numeroConta
-        , string nomeCompleto
-        , bool ativo = false)
-    {
-        var conta = new ContaCorrente()
-        {
-            Id = Guid.NewGuid(),
-            NomeCompleto = NomeCompleto.Create(nomeCompleto),
-            NumeroConta = NumeroConta.Create(numeroConta),
-            Ativo = ativo
-        };
-
-        return conta;
-    }
+    public bool Inativa => !Ativo;
 
     public static ContaCorrente Restore(Guid id
         , long numeroConta
@@ -49,28 +37,24 @@ public sealed class ContaCorrente
             Ativo = ativo
         };
 
-        foreach (var movimento in historico)
-            conta._historico.Add(movimento);
+        if (historico is not null)
+            foreach (var movimento in historico)
+                conta._historico.Add(movimento);
 
         return conta;
     }
 
-    public void Deposito(decimal valor)
+    public Guid FazerMovimentacao(ETipoMovimento tipoMovimento, decimal valor)
     {
-        if (valor <= 0)
-            return;
+        if(valor < 0)
+            throw new BusinessException(new Error(nameof(Mensagens.INVALID_VALUE), Mensagens.INVALID_VALUE));
 
-        _historico.Add(MovimentoConta.Create(Id, ETipoMovimento.Credito, valor));
-    }
+        var movimento = MovimentoConta.Create(Id, tipoMovimento, valor);
 
-    public void Saque(decimal quantia)
-    {
-        if (quantia <= 0)
-            throw new ArgumentException("Valor do saque deve ser maior que zero", nameof(quantia));
+        _historico.Add(movimento);
 
-        if (Saldo < quantia)
-            throw new InvalidOperationException("Saldo insuficiente");
+        this.Publish(new MovimentacaoCriadaDomainEvent(movimento));
 
-        _historico.Add(MovimentoConta.Create(Id, ETipoMovimento.Debito, -quantia));
+        return movimento.Id;
     }
 }

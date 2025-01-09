@@ -1,4 +1,4 @@
-﻿namespace Abstractions;
+﻿namespace Abstractions.Domain;
 public abstract class ValueObject
 {
     protected abstract IEnumerable<object> GetAtomicValues();

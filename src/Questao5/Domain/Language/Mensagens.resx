@@ -120,7 +120,22 @@
   <data name="INACTIVE_ACCOUNT" xml:space="preserve">
     <value>Apenas contas correntes ativas podem consultar o saldo</value>
   </data>
+  <data name="INACTIVE_ACCOUNT_MOV" xml:space="preserve">
+    <value>Apenas contas correntes ativas podem receber movimentação</value>
+  </data>
   <data name="INVALID_ACCOUNT" xml:space="preserve">
     <value>Apenas contas correntes cadastradas podem consultar o saldo.</value>
+  </data>
+  <data name="INVALID_ACCOUNT_MOV" xml:space="preserve">
+    <value>Apenas contas correntes cadastradas podem receber movimentação</value>
+  </data>
+  <data name="INVALID_TYPE" xml:space="preserve">
+    <value>Apenas os tipos “débito” ou “crédito” podem ser aceitos</value>
+  </data>
+  <data name="INVALID_VALUE" xml:space="preserve">
+    <value>Apenas valores positivos podem ser recebidos</value>
+  </data>
+  <data name="UNKNOWN_ERROR" xml:space="preserve">
+    <value>Houve um problema ao salvar movimentação</value>
   </data>
 </root>

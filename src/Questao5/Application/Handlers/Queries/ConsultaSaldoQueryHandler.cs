@@ -1,12 +1,12 @@
 ﻿using Abstractions.Exceptions;
 using FluentValidation;
 using MediatR;
-using Questao5.Application.Handlers.Interfaces;
+using Questao5.Application.Handlers.Queries.Interfaces;
 using Questao5.Application.Queries.Requests;
 using Questao5.Application.Queries.Responses;
 using Questao5.Domain.Errors;
 
-namespace Questao5.Application.Handlers;
+namespace Questao5.Application.Handlers.Queries;
 
 public sealed class ConsultaSaldoQueryHandler : IRequestHandler<ConsultaSaldoQuery, ConsultaSaldoQueryResponse>
 {
