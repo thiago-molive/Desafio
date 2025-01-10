@@ -16,7 +16,7 @@ Usei uma abordagem com DDD para realiar o desafio e escrevi testes de unidade pa
 - Os models estão na pasta domain e a integração com a api na pasta integration
 
 ### Desafio 3
-Fiquei com dúvida, estou aguardando a resposta de como proceder...
+Resposta: style.css, apenas.
 
 ### Desafio 4
 A resposta também está no arquivo da questão 4
